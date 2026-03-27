@@ -41,3 +41,4 @@ services:
 volumes:
   postgres-data:
   static-data:
+  media-data:
