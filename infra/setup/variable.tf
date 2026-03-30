@@ -1,6 +1,6 @@
 # Define default variable
 
-variable "tf_state-bucket" {
+variable "tf_state_bucket" {
   description = "Name of the S3 bucket of AWS for storing TF state"
   default     = "devops-py-app" # S3 buket name manually created in AWS
 }
