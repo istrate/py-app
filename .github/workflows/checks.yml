@@ -1,5 +1,5 @@
 ---
-name: Tests and checks
+name: py-app build flow
 
 on:
   pull_request:
@@ -11,4 +11,4 @@ jobs:
     uses: ./.github/workflows/test-and-lint.yml
     secrets:
       DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
-      DOCKERHUB_TOKEN: ${{ vars.DOCKERHUB_TOKEN }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
