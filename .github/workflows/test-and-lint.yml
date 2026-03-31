@@ -12,7 +12,7 @@ on:
 
 jobs:
   python:
-    name: Build and test Python application
+    name: Test and Lint Python application
     runs-on: ubuntu-22.04
     steps:
       - name: Login to Docker Hub

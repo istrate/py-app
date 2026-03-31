@@ -1,5 +1,5 @@
 ---
-name: Tests and checks
+name: py-app build flow
 
 on:
   pull_request:
