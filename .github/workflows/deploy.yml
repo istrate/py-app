@@ -1,0 +1,47 @@
+
+---
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - prod
+
+jobs:
+  test-lint:
+    uses: ./.github/workflows/test-and-lint.yml
+    name: Test and Lint
+    secrets:
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-22.04
+    needs: [test-lint]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set vars
+        # Set github environment variables
+        # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#using-the-vars-context-to-access-configuration-variable-values
+        run: |
+          printenv
+          if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
+            echo "prod" > .workspace
+          else
+          echo "staging" > .workspace
+          fi
+      - name: Push to ECR
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # Pushing a Docker image to an Amazon ECR private repository
+        # https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html
+        run: |
+          aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com
+          docker build --compress -t ${{ vars.ECR_REPO_APP }}:$GITHUB_SHA .
+          docker push ${{ vars.ECR_REPO_APP }}:$GITHUB_SHA
+          docker build --compress -t ${{ vars.ECR_REPO_PROXY }}:$GITHUB_SHA proxy/
+          docker push ${{ vars.ECR_REPO_PROXY }}:$GITHUB_SHA
