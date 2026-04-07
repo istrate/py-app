@@ -33,3 +33,4 @@ locals {
 }
 
 # get current region from aws accountdata "aws_region" "current" {}
+data "aws_region" "current" {}
