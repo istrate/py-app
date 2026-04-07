@@ -12,7 +12,7 @@ COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
 
-ARG DEV=false
+ARG DEVfalse
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client jpeg-dev && \
