@@ -128,13 +128,15 @@ data "aws_iam_policy_document" "rds" {
     actions = [
       "rds:DescribeDBSubnetGroups",
       "rds:DescribeDBInstances",
+      "rds:ModifyDBSubnetGroup",
       "rds:CreateDBSubnetGroup",
       "rds:DeleteDBSubnetGroup",
       "rds:CreateDBInstance",
       "rds:DeleteDBInstance",
       "rds:ListTagsForResource",
       "rds:ModifyDBInstance",
-      "ec2:DescribeAvailabilityZones"
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs"
     ]
     resources = ["*"]
   }
