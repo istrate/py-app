@@ -1,6 +1,6 @@
 services:
   terraform:
-    image: hashicorp/terraform:1.6.2
+    image: hashicorp/terraform:1.14.7
     volumes:
       - ./setup/:/tf/setup
       - ./deploy/:/tf/deploy
