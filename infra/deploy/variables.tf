@@ -23,3 +23,7 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "ecr_proxy_image" {
+  description = "Path to the ECR repo with the proxy image"
+}
