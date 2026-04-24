@@ -19,3 +19,4 @@ output "ecr_repo_proxy" {
   description = "ECR repository URL for the proxy image"
   value       = aws_ecr_repository.proxy.repository_url
 }
+
